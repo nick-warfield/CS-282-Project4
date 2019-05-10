@@ -66,7 +66,7 @@ public class Graph
 	{
 		int minWeight = Integer.MAX_VALUE; 
 		int[][] marked = new int[vertices][vertices];
-		for(i = 0; i < vertices; i++)
+		for(int i = 0; i < vertices; i++)
 		{
 			LinkedList<Edge> list = adjacencyList[i];
 			
@@ -81,7 +81,7 @@ public class Graph
 					minWeight = list.get(j).weight;
 				}
             }
-			if(minWeight != MAX_VALUE)
+			if(minWeight != Integer.MAX_VALUE)
 			{
 				System.out.print(" " + list.get(minWeight).destination + " " + list.get(minWeight).weight);
 				marked[list.get(minWeight).destination] = true;
@@ -89,7 +89,7 @@ public class Graph
 		}
 	}
 	
-	public void Shortest()
+	public void Shortest(int Node)
 	{
 		
 	}
