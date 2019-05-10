@@ -4,12 +4,13 @@
 // Javier Aguayo
 // John Wiesenfeld
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.io.*;
 
 public class Graph 
 {
     private int vertices;
-    private LinkedList<Edge>[] adjacencyList;
+    private ArrayList<LinkedList<Edge>> adjacencyList;
 
     public Graph(BufferedReader reader) throws IOException
 	{
@@ -17,11 +18,12 @@ public class Graph
 		int neighbors, src, dest, weight;
 		line = reader.readLine();
 		this.vertices = Integer.parseInt(line);
-		adjacencyList = new LinkedList[vertices];
+		adjacencyList = new ArrayList<LinkedList<Edge>>(vertices);
 
 		for (int v = 0; v < vertices; v++) 
 		{
-			adjacencyList[v] = new LinkedList<>();
+			LinkedList<Edge> edgeList = new LinkedList<Edge>();
+			adjacencyList.add(v, edgeList);
 			line = reader.readLine();
 			String[] token = line.split(" ");
 			neighbors = Integer.parseInt(token[0]);
@@ -38,7 +40,7 @@ public class Graph
     private void addEdge(int source, int destination, int weight) 
 	{
         Edge edge = new Edge(source, destination, weight);
-        adjacencyList[source].add(edge); 
+        adjacencyList.get(source).add(edge);
     }
 
     public void printGraph()
@@ -46,7 +48,7 @@ public class Graph
         System.out.println(vertices);
 		for (int i = 0; i <vertices ; i++) 
 		{
-			LinkedList<Edge> list = adjacencyList[i];
+			LinkedList<Edge> list = adjacencyList.get(i);
             System.out.print(list.size());
 			
 			for (int j = 0; j <list.size() ; j++) 
@@ -62,13 +64,13 @@ public class Graph
 		return false;
 	}
 	//?? Stuck ??
-	public void MST()
+/*	public void MST()
 	{
 		int minWeight = Integer.MAX_VALUE; 
 		int[][] marked = new int[vertices][vertices];
 		for(int i = 0; i < vertices; i++)
 		{
-			LinkedList<Edge> list = adjacencyList[i];
+			LinkedList<Edge> list = adjacencyList.get(i);
 			
 			for (int j = 0; j <list.size() ; j++) 
 			{
@@ -88,13 +90,9 @@ public class Graph
 			}
 		}
 	}
-	
-	public void Shortest(int Node)
-	{
-		
-	}
-	
-	private class Edge 
+	*/
+
+	private class Edge
 	{
         int source;
         int destination;
@@ -107,4 +105,43 @@ public class Graph
             this.weight = weight;
         }
     }
+
+	public void Shortest(int Node)
+	{
+		DijkstraRow[] dijkstra = new DijkstraRow[vertices];
+
+		for(int i = 0; i < dijkstra.length; i++)
+		{
+			dijkstra[i] = new DijkstraRow();
+		}
+	}
+
+	private class DijkstraRow
+	{
+		boolean visited;
+		int weight;
+		int previous;
+
+		public DijkstraRow()
+		{
+			visited = false;
+			weight = Integer.MAX_VALUE;
+			previous = Integer.MAX_VALUE;
+		}
+
+		public void markVisited()
+		{
+			visited = true;
+		}
+
+		public void setWeight(int num)
+		{
+			weight = num;
+		}
+
+		public void setPrevious(int node)
+		{
+			previous = node;
+		}
+	}
 }
