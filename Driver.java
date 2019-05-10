@@ -3,22 +3,32 @@
 // Nicholas Warfield
 // Javier Aguayo
 // John Wiesenfeld
-import java.io.File;
-import java.util.Scanner;
 
-public class Driver{
+import java.io.*;
 
-	public Graph graph;
-
-	public static void main(String[] args)
+public class Driver
+{
+	public static void main(String[] args) 
 	{
-		Driver driver = new Driver();
-		driver.execute;
-	}
-
-	public void execute()
-	{
-		Scanner sc = new Scanner(System.in);
-
-	}
+        try{
+			FileReader fr = new FileReader("input.txt");
+			try{
+			BufferedReader br = new BufferedReader(fr);
+			Graph h = new Graph(br);
+			h.printGraph();
+			}
+			catch(Exception IOException){
+				System.out.println("Error opening input file");
+				System.exit(0);
+				//br.close();
+			}
+		}
+		catch(Exception FileNotFoundException){
+			System.out.println("Error no input file");
+			System.exit(0);
+			//fr.close();
+		}
+		
+		
+    }
 }
