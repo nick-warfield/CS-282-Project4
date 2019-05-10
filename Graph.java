@@ -114,18 +114,54 @@ public class Graph
 		{
 			dijkstra[i] = new DijkstraRow();
 		}
+
+		dijkstra[Node].cost = 0;
+
+		for(int i = 0; i < dijkstra.length; i++)
+		{
+			int current = findMinCost(dijkstra);
+			dijkstra[current].markVisited();
+			for(int j = 0; j < adjacencyList.get(i).size(); j++)
+			{
+				int neighbor = adjacencyList.get(i).get(j).destination;
+				int neighborCurrentCost = dijkstra[neighbor].cost;
+				int nodeCurrentCost = dijkstra[current].cost;
+				int neighborNewCost = adjacencyList.get(i).get(j).weight;
+
+				if(nodeCurrentCost + neighborNewCost < neighborCurrentCost)
+				{
+					dijkstra[neighbor].cost = nodeCurrentCost + neighborNewCost;
+					dijkstra[neighbor].previous = current;
+				}
+				//Pickup working here -----------------------
+			}
+		}
+	}
+	private int findMinCost(DijkstraRow[] dijkstra)
+	{
+		int min = Integer.MAX_VALUE;
+		int current = Integer.MAX_VALUE;
+		for(int i = 0; i < dijkstra.length; i++)
+		{
+			if(dijkstra[i].cost < min)
+			{
+				current = i;
+				min = dijkstra[i].cost;
+			}
+		}
+		return current;
 	}
 
 	private class DijkstraRow
 	{
 		boolean visited;
-		int weight;
+		int cost;
 		int previous;
 
 		public DijkstraRow()
 		{
 			visited = false;
-			weight = Integer.MAX_VALUE;
+			cost = Integer.MAX_VALUE;
 			previous = Integer.MAX_VALUE;
 		}
 
@@ -134,14 +170,5 @@ public class Graph
 			visited = true;
 		}
 
-		public void setWeight(int num)
-		{
-			weight = num;
-		}
-
-		public void setPrevious(int node)
-		{
-			previous = node;
-		}
 	}
 }
