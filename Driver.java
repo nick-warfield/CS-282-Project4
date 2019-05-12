@@ -56,7 +56,6 @@ public class Driver
         prompt();
         int input = sc.nextInt();
         if (input < 1 || input > 4) { input = -1; }
-        sc.close();
         return input;
     }
 
