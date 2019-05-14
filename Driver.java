@@ -67,7 +67,7 @@ public class Driver
 		}
 		else
 		{
-			System.out.println("Graph is not connected.");
+			System.out.println("\nError: Graph is not connected.\n");
 		}
 	}
 	private static void printPath(Graph g)
