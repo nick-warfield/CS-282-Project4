@@ -13,7 +13,7 @@ public class Graph
     private ArrayList<LinkedList<Edge>> adjacencyList;
     private DijkstraRow[] dijkstra;
 
-    public Graph(BufferedReader reader) throws IOException
+    public Graph(BufferedReader reader) throws IOException, Exception
 	{
 		String line;
 		int neighbors, src, dest, weight;

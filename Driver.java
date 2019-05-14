@@ -113,6 +113,12 @@ public class Driver
 				System.out.println("Exiting Program");
 				System.exit(0);
 			}
+			catch(Exception ex)
+			{
+				System.out.println(ex.toString());
+				System.out.println("Problem with file format");
+				validInput = false;
+			}
 		} while(!validInput);
 		return graph;
 	}
