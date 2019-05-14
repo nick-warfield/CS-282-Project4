@@ -80,7 +80,7 @@ public class Driver
 		{
 			g.printShortest(start);
 		} else {
-			System.out.println("Error: node does not exist");
+			System.out.println("\nError: node does not exist\n");
 		}
 
 	}
@@ -104,7 +104,9 @@ public class Driver
 			}
 			catch (FileNotFoundException fne)
 			{
+				System.out.println();
 				System.out.println(fne.toString());
+				System.out.println();
 				validInput = false;
 			}
 			catch (IOException ioe)
@@ -115,8 +117,9 @@ public class Driver
 			}
 			catch(Exception ex)
 			{
-				System.out.println(ex.toString());
-				System.out.println("Problem with file format");
+				System.out.println();
+				System.out.print(ex.toString());
+				System.out.println(" (Problem with file format)\n");
 				validInput = false;
 			}
 		} while(!validInput);
