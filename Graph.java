@@ -62,12 +62,7 @@ public class Graph
 
 	public boolean isConnected()
 	{
-		boolean connected = true;
-		for(int i = 0; i < vertices; i++)
-		{
-			if(!Shortest(i)) connected = false;
-		}
-		return connected;
+		return Shortest(0);
 	}
 
 
@@ -86,6 +81,8 @@ public class Graph
         }
     }
 
+    //This method essentially updates the class variable 'dijkstra', also returns false if any
+	//node is unreachable from the node specified (i.e. the graph is not connected)
 	private boolean Shortest(int Node)
 	{
 		dijkstra = new DijkstraRow[vertices];
