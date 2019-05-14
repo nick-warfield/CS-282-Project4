@@ -11,6 +11,7 @@ public class Graph
 {
     private int vertices;
     private ArrayList<LinkedList<Edge>> adjacencyList;
+    private DijkstraRow[] dijkstra;
 
     public Graph(BufferedReader reader) throws IOException
 	{
@@ -61,36 +62,13 @@ public class Graph
 
 	public boolean isConnected()
 	{
-		return false;
-	}
-	//?? Stuck ??
-/*	public void MST()
-	{
-		int minWeight = Integer.MAX_VALUE;
-		int[][] marked = new int[vertices][vertices];
+		boolean connected = true;
 		for(int i = 0; i < vertices; i++)
 		{
-			LinkedList<Edge> list = adjacencyList.get(i);
-
-			for (int j = 0; j <list.size() ; j++)
-			{
-                if(marked[j][i]==1)
-				{
-				System.out.print(" " + list.get(j).destination + " " + list.get(j).weight);
-				}
-				else if(list.get(j).weight < minWeight)
-				{
-					minWeight = list.get(j).weight;
-				}
-            }
-			if(minWeight != Integer.MAX_VALUE)
-			{
-				System.out.print(" " + list.get(minWeight).destination + " " + list.get(minWeight).weight);
-				marked[list.get(minWeight).destination] = true;
-			}
+			if(!Shortest(i)) connected = false;
 		}
+		return connected;
 	}
-	*/
 
 
 
@@ -108,9 +86,10 @@ public class Graph
         }
     }
 
-	public void Shortest(int Node)
+	private boolean Shortest(int Node)
 	{
-		DijkstraRow[] dijkstra = new DijkstraRow[vertices];
+		dijkstra = new DijkstraRow[vertices];
+		boolean connected = true;
 
 		for(int i = 0; i < dijkstra.length; i++)
 		{
@@ -125,6 +104,7 @@ public class Graph
 		{
 			//find lowest cost node so far
 			int current = findMinCost(dijkstra);
+			if(current == Integer.MAX_VALUE) return false;
 			//mark this node visited
 			dijkstra[current].markVisited();
 			//loop through neighboring nodes
@@ -145,7 +125,16 @@ public class Graph
 				}
 			}
 		}
+		for(int i = 0; i < dijkstra.length; i++)
+		{
+			if(dijkstra[i].cost == Integer.MAX_VALUE) connected = false;
+		}
+		return connected;
+	}
 
+	public void printShortest(int Node)
+	{
+		Shortest(Node);
 		//printing
 		System.out.println();
 		for(int i = 0; i < dijkstra.length; i++)
@@ -157,11 +146,13 @@ public class Graph
 				System.out.println();
 			} else {
 				System.out.print(i + ": (Infinity) ");
+				System.out.println();
 			}
 		}
 		System.out.println();
-
 	}
+
+
 
 	//recursive print function
 	private void print(int i, DijkstraRow[] d)

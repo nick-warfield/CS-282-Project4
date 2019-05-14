@@ -19,9 +19,9 @@ public class Driver
 			switch (menu())
 			{
 				case 1:
-					System.out.println("Graph is " +
+					System.out.println("\nGraph is " +
 							(isConnected ? "" : "not ") +
-							"connected");
+							"connected\n");
 					break;
 
 				case 2:
@@ -78,7 +78,7 @@ public class Driver
 		int start = reader.nextInt();
 		if(start >= 0 && start < g.getVertices())
 		{
-			g.Shortest(start);
+			g.printShortest(start);
 		} else {
 			System.out.println("Error: node does not exist");
 		}
