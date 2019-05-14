@@ -58,7 +58,7 @@ public class Graph
 			System.out.println();
         }
     }
-	
+
 	public boolean isConnected()
 	{
 		return false;
@@ -66,13 +66,13 @@ public class Graph
 	//?? Stuck ??
 /*	public void MST()
 	{
-		int minWeight = Integer.MAX_VALUE; 
+		int minWeight = Integer.MAX_VALUE;
 		int[][] marked = new int[vertices][vertices];
 		for(int i = 0; i < vertices; i++)
 		{
 			LinkedList<Edge> list = adjacencyList.get(i);
-			
-			for (int j = 0; j <list.size() ; j++) 
+
+			for (int j = 0; j <list.size() ; j++)
 			{
                 if(marked[j][i]==1)
 				{
@@ -91,6 +91,8 @@ public class Graph
 		}
 	}
 	*/
+
+
 
 	private class Edge
 	{
@@ -115,38 +117,74 @@ public class Graph
 			dijkstra[i] = new DijkstraRow();
 		}
 
+		//set starting node cost to 0
 		dijkstra[Node].cost = 0;
 
+		//loop through all vertices
 		for(int i = 0; i < dijkstra.length; i++)
 		{
+			//find lowest cost node so far
 			int current = findMinCost(dijkstra);
+			//mark this node visited
 			dijkstra[current].markVisited();
-			for(int j = 0; j < adjacencyList.get(i).size(); j++)
+			//loop through neighboring nodes
+			for(int j = 0; j < adjacencyList.get(current).size(); j++)
 			{
-				int neighbor = adjacencyList.get(i).get(j).destination;
-				int neighborCurrentCost = dijkstra[neighbor].cost;
-				int nodeCurrentCost = dijkstra[current].cost;
-				int neighborNewCost = adjacencyList.get(i).get(j).weight;
-
-				if(nodeCurrentCost + neighborNewCost < neighborCurrentCost)
+				int neighbor = adjacencyList.get(current).get(j).destination;
+				if(!dijkstra[neighbor].visited)
 				{
-					dijkstra[neighbor].cost = nodeCurrentCost + neighborNewCost;
-					dijkstra[neighbor].previous = current;
+					int CurrentCostToNeighbor = dijkstra[neighbor].cost;
+					int CostToCurrent = dijkstra[current].cost;
+					int PossibleNewCost = CostToCurrent + adjacencyList.get(current).get(j).weight;
+
+					if(PossibleNewCost < CurrentCostToNeighbor)
+					{
+						dijkstra[neighbor].cost = PossibleNewCost;
+						dijkstra[neighbor].previous = current;
+					}
 				}
-				//Pickup working here -----------------------
 			}
 		}
+
+		//printing
+		System.out.println();
+		for(int i = 0; i < dijkstra.length; i++)
+		{
+			if(dijkstra[i].cost < Integer.MAX_VALUE)
+			{
+				System.out.print(i + ": (" + dijkstra[i].cost + ") ");
+				print(i, dijkstra);
+				System.out.println();
+			} else {
+				System.out.print(i + ": (Infinity) ");
+			}
+		}
+		System.out.println();
+
 	}
-	private int findMinCost(DijkstraRow[] dijkstra)
+
+	//recursive print function
+	private void print(int i, DijkstraRow[] d)
+	{
+		if(d[i].previous == Integer.MAX_VALUE)
+		{
+			System.out.print(i);
+			return;
+		}
+		print(d[i].previous, d);
+		System.out.print(" -> " + i);
+	}
+
+	private int findMinCost(DijkstraRow[] d)
 	{
 		int min = Integer.MAX_VALUE;
 		int current = Integer.MAX_VALUE;
-		for(int i = 0; i < dijkstra.length; i++)
+		for(int i = 0; i < d.length; i++)
 		{
-			if(dijkstra[i].cost < min)
+			if(d[i].cost < min && !d[i].visited)
 			{
 				current = i;
-				min = dijkstra[i].cost;
+				min = d[i].cost;
 			}
 		}
 		return current;
@@ -164,11 +202,14 @@ public class Graph
 			cost = Integer.MAX_VALUE;
 			previous = Integer.MAX_VALUE;
 		}
-
 		public void markVisited()
 		{
 			visited = true;
 		}
+	}
 
+	public int getVertices()
+	{
+		return vertices;
 	}
 }
