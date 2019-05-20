@@ -1,1 +1,17 @@
-status file
+COMP282 Section 16304 Project 4
+
+Group members:
+Nicholas Warfield
+Javier Aguayo
+John Wiesenfeld
+
+Project Status
+--------------------
+Compiles and runs properly. We have tested it thoroughly with connected & unconnected graphs. 
+
+
+Development of Code:
+--------------------
+We decided that for this project we would let Javier take the lead, and so he started us off by setting up the Graph class to load and print a graph as directed in the prompt. He then delegated the methods that the other members would work on. John took on the "Shortest Path" method, and Nick took the Driver class/error handling. John ended up writing "isConnected" as well because it only required one line of code by having Shortest Path return a boolean (false if any node is inaccessible during dijkstra's algorithm). Javier wrote the minimum spanning tree method. 
+
+Overall, this project went pretty smoothly, and we didn't have any major problems. We talked about implementing a priority queue to speed up Dijkstra's algorithm, but we decided to opt for a properly functioning project first, and if we had time we would try experimenting with priority queue. We ended up not having enough time, unfortunately.

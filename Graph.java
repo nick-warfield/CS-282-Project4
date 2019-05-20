@@ -106,6 +106,7 @@ public class Graph
 			}
 			System.out.println();
         }
+        System.out.println();
 	} 
   
     public void primMST() 
@@ -249,9 +250,6 @@ public class Graph
 		}
 		System.out.println();
 	}
-
-
-
 	//recursive print function
 	private void print(int i, DijkstraRow[] d)
 	{
