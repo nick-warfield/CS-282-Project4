@@ -63,7 +63,7 @@ public class Driver
 	{
 		if (isConnected)
 		{
-			//graph.MST();
+			g.primMST();
 		}
 		else
 		{
